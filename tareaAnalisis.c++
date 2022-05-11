@@ -2,6 +2,7 @@
 #include <map>
 #include <iostream>
 #include <fstream>
+#include <stdio.h>
 
 using namespace std;
 
@@ -11,25 +12,27 @@ void Mapeo(string frase){
   typedef map<char,int> Mapa;
 
   Mapa contador;
-  //string * probabilidades = NULL;
-  //probabilidades = new string[]
 
   double largoFrase = frase.length();
   cout << largoFrase;
 
- // string * probabilidades = NULL;
-  //probabilidades = new string[largoFrase];
+
+  string * probabilidades = NULL;
+  probabilidades = new string[frase.length()];
 
   for( size_t i=0; i<frase.size(); ++i)
     contador[frase[i]]++;
 
   cout << "Resultado:\n";
   int n=0;
+  int k;
   for( Mapa::const_iterator it = contador.begin(); it != contador.end(); ++it )
   {
       //cout << it->first << ":" << it->second << '\n';
-      double probLetra = it->second/largoFrase;
-      cout << "Probabilidad de: " << it->first << " : " << probLetra << '\n';
+      //double probLetra = it->second/largoFrase;
+      k = it->first;
+      cout << it->first << " : " << k << '\n';
+      //cout << "Probabilidad de: " << it->first << " : " << it->second << '\n';
       n+=1;
   }
   cout<<n<<'\n';
@@ -47,5 +50,14 @@ int main()
     frasexd+=linea;
   } 
   Mapeo(frasexd);
+
+  /*int k;
+  string fr = "afd";
+  for (int i = 0; i < fr.length(); i++)
+  {
+    k = fr[i];
+    cout << k << '\n';
+  }*/
+
 
 }
