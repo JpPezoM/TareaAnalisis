@@ -6,19 +6,7 @@
 
 using namespace std;
 
-void Mapeoqlo(string frase){
-  int * ascci=0;
-  ascci = new int[256];
-  for(int i=0;i<=frase.length();i++){
-    cout<<frase[i]<<" :"<<int(frase[i])<<'\n';
-  }
-  for(int i=0;i<=256;i++){
-    cout<<i<<' ' << char(ascci[i])<<": "<<ascci[i]<<'\n';
-  }
-  
 
-
-}
 void Mapeo(string frase){
   // Para simplificar la declaración de iteradores
   typedef map<char,int> Mapa;
@@ -61,7 +49,7 @@ int main()
   while (getline(archivo, linea)){
     frasexd+=linea;
   } 
-  Mapeoqlo(frasexd);
+  Mapeo(frasexd);
 
   /*int k;
   string fr = "afd";
