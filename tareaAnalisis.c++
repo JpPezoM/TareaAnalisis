@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include <iostream>
 using namespace std;
 #include <map>
@@ -33,4 +34,5 @@ int main()
 {
     string frase = "AASD,FG.gd,O) YSB";
     Mapeo(frase);
+
 }
