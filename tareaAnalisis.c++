@@ -6,6 +6,17 @@
 
 using namespace std;
 
+struct node{
+  char simbolo;
+  int ascii;
+  string code;
+  double prob;
+};
+typedef struct node node;
+
+
+
+
 
 void Mapeo(string frase){
   // Para simplificar la declaración de iteradores
@@ -30,7 +41,8 @@ void Mapeo(string frase){
   {
       //cout << it->first << ":" << it->second << '\n';
       //double probLetra = it->second/largoFrase;
-      k = it->first;
+      unsigned char simb = it->first;
+      k = simb;
       cout << it->first << " : " << k << '\n';
       //cout << "Probabilidad de: " << it->first << " : " << it->second << '\n';
       n+=1;
@@ -58,6 +70,10 @@ int main()
     k = fr[i];
     cout << k << '\n';
   }*/
+
+ /* node prueba;
+  prueba.prob = 0.2;
+  cout << prueba.prob;*/
 
 
 }
