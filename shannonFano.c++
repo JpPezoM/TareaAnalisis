@@ -46,7 +46,6 @@ void shannonfanon(Mapa simbolos,int inicio,int largo,Mapa1 simCodificado){
   //}
   Mapa A;
   Mapa B;
-  map<unsigned char,double,string> 
 
   
 
