@@ -11,18 +11,47 @@ struct node{
   int ascii;
   string code;
   double prob;
+  struct node *next;
 };
-typedef struct node node;
+typedef struct node *Lista;
 
 
+void insertarFinal(Lista &lista, double valor){
+  Lista t, q = new(struct node);
 
+  q->prob = valor;
+  q->next = NULL;
 
+  if (lista == NULL){
+    lista = q;
+  }
+  else{
+    t = lista;
+    while (t->next != NULL){
+      t = t->next;
+    }
+    t->next = q;
+  }
+  
+}
 
-void Mapeo(string frase){
+void imprimeLista (Lista lista){
+  int i = 0;
+
+  while (lista != NULL){
+    cout << ' ' << i+1 << ") " << lista->prob << endl;
+    lista = lista->next;
+    i++;
+  }
+  
+}
+
+Lista Mapeo(string frase){
   // Para simplificar la declaración de iteradores
   typedef map<char,int> Mapa;
 
   Mapa contador;
+  Lista lista = NULL;
 
   double largoFrase = frase.length();
   cout << largoFrase;
@@ -40,14 +69,17 @@ void Mapeo(string frase){
   for( Mapa::const_iterator it = contador.begin(); it != contador.end(); ++it )
   {
       //cout << it->first << ":" << it->second << '\n';
-      //double probLetra = it->second/largoFrase;
+      double probLetra = it->second/largoFrase;
       unsigned char simb = it->first;
       k = simb;
-      cout << it->first << " : " << k << '\n';
-      //cout << "Probabilidad de: " << it->first << " : " << it->second << '\n';
+      //cout << it->first << " : " << k << '\n';
+      cout << "Probabilidad de: " << it->first << " : " << probLetra << '\n';
+      insertarFinal(lista, probLetra);
       n+=1;
   }
   cout<<n<<'\n';
+
+  return lista;
 }
 
 int main()
@@ -57,11 +89,15 @@ int main()
   string linea;
   int n =1;
   string frasexd;
+
+  Lista lista = NULL;
+
     // Obtener línea de archivo, y almacenar contenido en "linea"
   while (getline(archivo, linea)){
     frasexd+=linea;
   } 
-  Mapeo(frasexd);
+  lista = Mapeo(frasexd);
+  imprimeLista(lista);
 
   /*int k;
   string fr = "afd";
