@@ -7,8 +7,9 @@
 using namespace std;
 // Para simplificar la declaración de iteradores
 typedef map<unsigned char,double> Mapa;
-
+typedef map<unsigned char,double,string> Mapa1;
 template<typename Map>
+
 void PrintMap(Map& m)
 {
     cout << "[ ";
@@ -40,6 +41,16 @@ Mapa Mapeo(string frase){
   return final;
 }
 
+void shannonfanon(Mapa simbolos,int inicio,int largo,Mapa1 simCodificado){
+  //if(inicio==largo){
+  //}
+  Mapa A;
+  Mapa B;
+  map<unsigned char,double,string> 
+
+  
+
+}
 int main()
 {
   string nombreArchivo = "english.100MB";
@@ -57,6 +68,7 @@ int main()
 
   
   Mapa simbolos=Mapeo(frasexd);
+  Mapa1 simCodificados;
   PrintMap(simbolos);
 
 
