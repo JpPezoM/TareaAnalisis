@@ -24,14 +24,9 @@ Mapa Mapeo(string frase){
   Mapa final;
 
   double largoFrase = frase.length();
-  cout << largoFrase;
 
   for( size_t i=0; i<frase.size(); ++i)
     contador[frase[i]]++;
-
-  cout << "Resultado:\n";
-  int n=0;
-  int k;
 
   for(Mapa::const_iterator it=contador.begin();it!=contador.end();++it){
     double probLetra = it->second/largoFrase;
@@ -50,25 +45,29 @@ void shannonfanon(Mapa simbolos,int inicio,int largo,Mapa1 simCodificado){
   
 
 }
-int main()
-{
+int main(int argc, char **argv){
+	/*
+  if(argc != 2){
+		cout << "Error. Debe ejecutarse como ./Caracteres n" << endl;
+		exit(EXIT_FAILURE);
+	} 
+	string x= argv[1];
+  cout<< x <<"/n";
+  */
   string nombreArchivo = "english.100MB";
   ifstream archivo(nombreArchivo.c_str());
-  
+
   string linea;
-  int n =1;
   string frasexd;
 
-
-    // Obtener línea de archivo, y almacenar contenido en "linea"
+  // Obtener línea de archivo, y almacenar contenido en "linea"
   while (getline(archivo, linea)){
     frasexd+=linea;
   } 
 
-  
   Mapa simbolos=Mapeo(frasexd);
   Mapa1 simCodificados;
   PrintMap(simbolos);
-
-
+  //simbolos.swap();
+  return 0;
 }
