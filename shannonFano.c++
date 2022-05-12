@@ -5,6 +5,8 @@
 #include <stdio.h>
 
 using namespace std;
+// Para simplificar la declaración de iteradores
+typedef map<unsigned char,double> Mapa;
 
 template<typename Map>
 void PrintMap(Map& m)
@@ -16,11 +18,7 @@ void PrintMap(Map& m)
     cout << "]\n";
 }
 
-void Mapeo(string frase){
-  // Para simplificar la declaración de iteradores
-  typedef map<unsigned char,double> Mapa;
-  map<unsigned char, string,double> simbolos;
-
+Mapa Mapeo(string frase){
   Mapa contador;
   Mapa final;
 
@@ -33,22 +31,13 @@ void Mapeo(string frase){
   cout << "Resultado:\n";
   int n=0;
   int k;
+
   for(Mapa::const_iterator it=contador.begin();it!=contador.end();++it){
     double probLetra = it->second/largoFrase;
     final.insert(pair<unsigned char,double>(it->first,probLetra));
   }
-  /*for( Mapa::const_iterator it = contador.begin(); it != contador.end(); ++it )
-  {
-      //cout << it->first << ":" << it->second << '\n';
-      double probLetra = it->second/largoFrase;
-      unsigned char simb = it->first;
-      k = simb;
-      //cout << it->first << " : " << k << '\n';
-      //cout << "Probabilidad de: " << it->first << " : " << probLetra << '\n';
-      it->second=probLetra;
-      n+=1;
-  }*/
-  PrintMap(final);
+  //PrintMap(final);
+  return final;
 }
 
 int main()
@@ -65,7 +54,10 @@ int main()
   while (getline(archivo, linea)){
     frasexd+=linea;
   } 
-  Mapeo(frasexd);
+
+  
+  Mapa simbolos=Mapeo(frasexd);
+  PrintMap(simbolos);
 
 
 }
