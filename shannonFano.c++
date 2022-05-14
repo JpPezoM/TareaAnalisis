@@ -7,6 +7,7 @@
 using namespace std;
 // Para simplificar la declaración de iteradores
 typedef map<unsigned char,double> Mapa;
+typedef map<double, unsigned char> MapaS;
 typedef map<unsigned char,double,string> Mapa1;
 template<typename Map>
 
@@ -19,9 +20,10 @@ void PrintMap(Map& m)
     cout << "]\n";
 }
 
-Mapa Mapeo(string frase){
+
+MapaS Mapeo(string frase){
   Mapa contador;
-  Mapa final;
+  MapaS final;
 
   double largoFrase = frase.length();
 
@@ -30,7 +32,7 @@ Mapa Mapeo(string frase){
 
   for(Mapa::const_iterator it=contador.begin();it!=contador.end();++it){
     double probLetra = it->second/largoFrase;
-    final.insert(pair<unsigned char,double>(it->first,probLetra));
+    final.insert(pair<double, unsigned char>(probLetra, it->first));
   }
   //PrintMap(final);
   return final;
@@ -65,8 +67,8 @@ int main(int argc, char **argv){
     frasexd+=linea;
   } 
 
-  Mapa simbolos=Mapeo(frasexd);
-  Mapa1 simCodificados;
+  MapaS simbolos=Mapeo(frasexd);
+  //Mapa1 simCodificados;
   PrintMap(simbolos);
   //simbolos.swap();
   return 0;
