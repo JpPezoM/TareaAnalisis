@@ -62,7 +62,7 @@ int partition(MultiMapS simbolos, int p, double sumaA, double sumaB){
       ++it;
     }
     //cout << "SumaA = " << sumaA << " " << "SumaB = " << sumaB << endl;
-    if (sumaA <= sumaB) {
+    if (sumaA = sumaB || sumaA < sumaB) {
       cout << "Minma diferencia : " << dif << "En la posicion p : " << p << endl;
       return p;
     }
@@ -115,7 +115,7 @@ int main(int argc, char **argv){
 	string x= argv[1];
   cout<< x <<"/n";
   */
-  string nombreArchivo = "prueba.txt";
+  string nombreArchivo = "english.100MB";
   ifstream archivo(nombreArchivo.c_str());
 
   string linea;
