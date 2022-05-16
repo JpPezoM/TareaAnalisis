@@ -39,33 +39,31 @@ MapaS Mapeo(string frase){
   return final;
 }
 
-int partition(MapaS simbolos, int p){
-  double sumaA;
-  double sumaB;
-  double dif;
-  int cont = 0;
+int partition(MapaS simbolos, int p, double sumaA, double sumaB){
 
-  //Empieza la suma
-  MapaS::const_iterator it=simbolos.begin();
-  for(int i = 0; i < p; i++){ //Suma la primera parte
-    sumaA += abs(it->first);
-    //cout << "A" << abs(it->first) << " - "<< it->second << endl;
-    ++it;
-  }
-  for (int i = p; i < simbolos.size(); i++){ //suma la segunda parte
-    sumaB += abs(it->first);
-    //cout << "B" << abs(it->first) << " - "<< it->second << endl;
-    ++it;
-  }
-
-  //Se ve las diferencias de las sumas
-  dif = sumaA - sumaB;
-  if (sumaA > sumaB){
-    int part = partition(simbolos, p-1);
-  }
-  
-  cout << dif << endl;
-  cout << "SumaA = " << sumaA << " " << "SumaB = " << sumaB << endl;  
+  double dif = sumaA - sumaB;
+  if (sumaA >= sumaB){
+    //Empieza la suma
+    MapaS::const_iterator it=simbolos.begin();
+    sumaA = 0;
+    sumaB = 0;
+    for(int i = 0; i < p; i++){ //Suma la primera parte
+      sumaA += abs(it->first);
+      //cout << "A" << abs(it->first) << " - "<< it->second << endl;
+      ++it;
+    }
+    for (int i = p+1; i < simbolos.size(); i++){ //suma la segunda parte
+      sumaB += abs(it->first);
+     //cout << "B" << abs(it->first) << " - "<< it->second << endl;
+      ++it;
+    }
+    cout << "SumaA = " << sumaA << " " << "SumaB = " << sumaB << endl;
+    if (sumaA < sumaB) {
+      cout << dif << endl;
+      return p;
+    }
+    return partition(simbolos, p-1, sumaA, sumaB);
+  } 
   return p;
 }
 
@@ -73,7 +71,7 @@ void shannonfanon(MapaS simbolos){
   if (simbolos.empty()) return; //Retorna si no hay ningun valor en el mapa
 
   MapaCod mapaCodificado;
-  int p = partition(simbolos, simbolos.size()/2); //Se lama a la funcion que
+  int p = partition(simbolos, simbolos.size()/2, 0, 0); //Se lama a la funcion que
   
 
 
@@ -111,6 +109,6 @@ int main(int argc, char **argv){
   //Mapa1 simCodificados;
   PrintMap(simbolos);
   //simbolos.swap();
-  int p = partition(simbolos, simbolos.size()/2);
+  int p = partition(simbolos, simbolos.size()/2, 0, 0);
   return 0;
 }
