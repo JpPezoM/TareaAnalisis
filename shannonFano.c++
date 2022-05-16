@@ -14,11 +14,10 @@ template<typename Map>
 
 void PrintMap(Map& m)
 {
-    cout << "[ ";
     for (auto &item : m) {
         cout << item.first << ":" << item.second << " " << '\n';
     }
-    cout << "]\n";
+    
 }
 
 
