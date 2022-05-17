@@ -4,6 +4,7 @@
 #include <fstream>
 #include <stdio.h>
 #include <cmath>
+#include <list>
 
 using namespace std;
 // Para simplificar la declaración de iteradores
@@ -11,16 +12,23 @@ typedef map<unsigned char,double> Mapa;
 typedef map<double, unsigned char> MapaS;
 typedef map<string, unsigned char> MapaCod;
 typedef multimap<double, unsigned char> MultiMapS;
-template<typename Map>
 
-void PrintMap(Map& m)
+struct node{
+  unsigned char simbolo;
+  string code;
+  double prob;
+};
+typedef struct node node;
+
+
+/*void PrintMap(Map& m)
 {
     cout << "[ ";
     for (auto &item : m) {
         cout << item.first << ":" << item.second << " " << '\n';
     }
     cout << "]\n";
-}
+}*/
 
 
 MultiMapS Mapeo(string frase){
@@ -70,7 +78,20 @@ int partition(MultiMapS simbolos, int p, double sumaA, double sumaB){
   } 
   return p;
 }
+void MapToList(MapaS m){
+  list<node*> ListaSimbolos;
+  node* aux;
+  aux->code="";
+  aux->prob=0;
+  aux->simbolo=NULL;
 
+  for(MapaS::const_iterator it=m.begin();it!=m.end();++it){
+    aux->prob=it->first;
+    aux->simbolo=it->second;
+    ListaSimbolos.push_back(aux);
+  }
+
+}
 /*void shannonfanon(MapaS simbolos, MapaCod mapaCodificado1, MapaCod mapaCodificado2){
   if (simbolos.empty()) return; //Retorna si no hay ningun valor en el mapa
 
@@ -87,24 +108,6 @@ int partition(MultiMapS simbolos, int p, double sumaA, double sumaB){
       }
       
   }
-
-
-
-  
-
-
-  
-
-
-
-
-
-
-  Mapa A;
-  Mapa B;
-
-  
-
 }*/
 int main(int argc, char **argv){
 	/*
@@ -128,7 +131,7 @@ int main(int argc, char **argv){
 
   MultiMapS simbolos=Mapeo(frasexd);
   //Mapa1 simCodificados;
-  PrintMap(simbolos);
+  //PrintMap(simbolos);
   //simbolos.swap();
   int p = partition(simbolos, simbolos.size()/2, 0, 0);
   return 0;
