@@ -22,6 +22,14 @@ struct simbolos{
 };
 typedef struct simbolos nodo;
 
+void printList(nodo *L){
+	nodo *p = L;
+	while(p != nullptr){
+		cout << p->sim <<" : "<< p->prob<<'\n';
+		p = p->next;
+	}
+	cout << "NULL" << endl;
+}
 
 MultiMapS Mapeo(string frase){
   Mapa contador;
@@ -39,31 +47,56 @@ MultiMapS Mapeo(string frase){
   return final;
 }
 
-int partition(MultiMapS simbolos, int p, double sumaA, double sumaB){
+int partition(nodo *L, int part, double sumaA, double sumaB, int largo){
   double dif = sumaA - sumaB;
   if (sumaA >= sumaB){
     //Empieza la suma
-    MapaS::const_iterator it=simbolos.begin();
+    nodo *p = L;
     sumaA = 0;
     sumaB = 0;
-    for(int i = 0; i < p; i++){ //Suma la primera parte
-      sumaA += abs(it->first);
+    for(int i = 0; i < part; i++){ //Suma la primera parte
+      sumaA += p->prob;
       //cout << "A" << abs(it->first) << " - "<< it->second << endl;
-      ++it;
+      p = p->next;
     }
-    for (int i = p+1; i < simbolos.size(); i++){ //suma la segunda parte
-      sumaB += abs(it->first);
+    for (int i = part+1; i < largo; i++){ //suma la segunda parte
+      sumaB += p->prob;
      //cout << "B" << abs(it->first) << " - "<< it->second << endl;
-      ++it;
+      p = p->next;
     }
     //cout << "SumaA = " << sumaA << " " << "SumaB = " << sumaB << endl;
     if (sumaA = sumaB || sumaA < sumaB) {
       cout << "Minma diferencia : " << dif << "En la posicion p : " << p << endl;
-      return p;
+      return part;
     }
-    return partition(simbolos, p-1, sumaA, sumaB);
+    return partition(L, part-1, sumaA, sumaB, largo);
   } 
-  return p;
+  return part;
+}
+
+void shannonFanon(int in, int f, nodo *L, int pt, int largo){
+  if ((in+1) == f || in == f || in > f){
+    if (in == f || in > f) return;
+    nodo *p = L;
+    p->cod = "1";
+    p = p->next;
+    p->cod = "0";
+  }
+  else{
+    int part = partition(L, f/2, 0, 0, f);
+    nodo *p = L;
+    for (int i = in; i <= part; i++){
+      p->cod = p->cod +"1";
+      p = p->next;
+    }
+    for (int i = part +1; i <= f; i++){
+      p->cod = p->cod +"0";
+      p = p->next;
+    }
+    shannonFanon(in, part, L, pt, largo);
+    shannonFanon(part +1, f, L, pt, largo);
+  }
+  printList(L);
 }
 
 void appendToList(nodo **L,unsigned char sim,double prob){
@@ -84,22 +117,16 @@ void appendToList(nodo **L,unsigned char sim,double prob){
 	}
 }
 
-void printList(nodo *L){
-	nodo *p = L;
-	while(p != nullptr){
-		cout << p->sim <<" : "<< p->prob<<'\n';
-		p = p->next;
-	}
-	cout << "NULL" << endl;
-}
 
-void MapToList(MultiMapS m){
+
+nodo* MapToList(MultiMapS m){
   nodo *L =NULL;
 
   for(MultiMapS::const_iterator it=m.begin();it!=m.end();++it){
     appendToList(&L,it->second,abs(it->first));
   }
   printList(L);
+  return L;
 }
 
 
@@ -118,12 +145,14 @@ int main(int argc, char **argv){
 
   string linea;
   string frasexd;
+  int largoFrase = 0;
 
   while (getline(archivo, linea)){
     frasexd+=linea;
   } 
   MultiMapS simbolos=Mapeo(frasexd);
-  MapToList(simbolos);
-  //int p = partition(simbolos, simbolos.size()/2, 0, 0);
+  nodo *L = MapToList(simbolos);
+  shannonFanon(0, simbolos.size() -1, L, simbolos.size()/2, simbolos.size());
+  //int p = partition(L, simbolos.size()/2, 0, 0, simbolos.size());
   return 0;
 }

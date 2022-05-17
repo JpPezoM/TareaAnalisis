@@ -31,6 +31,7 @@ typedef struct node node;
 }*/
 
 
+
 MultiMapS Mapeo(string frase){
   Mapa contador;
   MultiMapS final;
@@ -78,7 +79,7 @@ int partition(MultiMapS simbolos, int p, double sumaA, double sumaB){
   } 
   return p;
 }
-void MapToList(MapaS m){
+list<node*> MapToList(MultiMapS m){
   list<node*> ListaSimbolos;
   node* aux;
   aux->code="";
@@ -90,7 +91,7 @@ void MapToList(MapaS m){
     aux->simbolo=it->second;
     ListaSimbolos.push_back(aux);
   }
-
+  return ListaSimbolos;
 }
 /*void shannonfanon(MapaS simbolos, MapaCod mapaCodificado1, MapaCod mapaCodificado2){
   if (simbolos.empty()) return; //Retorna si no hay ningun valor en el mapa
@@ -123,6 +124,7 @@ int main(int argc, char **argv){
 
   string linea;
   string frasexd;
+  list<node*> listaSimbolos;
 
   // Obtener línea de archivo, y almacenar contenido en "linea"
   while (getline(archivo, linea)){
@@ -130,6 +132,7 @@ int main(int argc, char **argv){
   } 
 
   MultiMapS simbolos=Mapeo(frasexd);
+  listaSimbolos = MapToList(simbolos);
   //Mapa1 simCodificados;
   //PrintMap(simbolos);
   //simbolos.swap();
