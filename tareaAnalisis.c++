@@ -22,14 +22,6 @@ struct simbolos{
 };
 typedef struct simbolos nodo;
 
-void printList(nodo *L){
-	nodo *p = L;
-	while(p != nullptr){
-		cout << p->sim <<" : "<< p->prob<<'\n';
-		p = p->next;
-	}
-	cout << "NULL" << endl;
-}
 
 MultiMapS Mapeo(string frase){
   Mapa contador;
@@ -45,6 +37,43 @@ MultiMapS Mapeo(string frase){
     final.insert(pair<double, unsigned char>(probLetra *-1, it->first));
   }
   return final;
+}
+
+void appendToList(nodo **L,unsigned char sim,double prob){
+  nodo *nuevo = new nodo;
+	nuevo->prob = prob;
+	nuevo->sim = sim;
+  nuevo->next = NULL;
+  nuevo->prev=NULL;
+
+	if(*L == nullptr)
+		*L = nuevo;
+	else{
+		nodo *q=*L;
+		while(q->next != nullptr)
+			q=q->next;
+		q->next=nuevo;
+    nuevo->prev=q;
+	}
+}
+
+void printList(nodo *L){
+	nodo *p = L;
+	while(p != nullptr){
+		cout << p->sim <<" : "<< p->prob<<'\n';
+		p = p->next;
+	}
+	cout << "NULL" << endl;
+}
+
+nodo* MapToList(MultiMapS m){
+  nodo *L =NULL;
+
+  for(MultiMapS::const_iterator it=m.begin();it!=m.end();++it){
+    appendToList(&L,it->second,abs(it->first));
+  }
+  //printList(L);
+  return L;
 }
 
 int partition(nodo *L, int part, double sumaA, double sumaB, int largo){
@@ -100,37 +129,6 @@ void shannonFanon(int in, int f, nodo *L){
   printList(L);
 }
 
-void appendToList(nodo **L,unsigned char sim,double prob){
-  nodo *nuevo = new nodo;
-	nuevo->prob = prob;
-	nuevo->sim = sim;
-  nuevo->next = NULL;
-  nuevo->prev=NULL;
-
-	if(*L == nullptr)
-		*L = nuevo;
-	else{
-		nodo *q=*L;
-		while(q->next != nullptr)
-			q=q->next;
-		q->next=nuevo;
-    nuevo->prev=q;
-	}
-}
-
-
-
-nodo* MapToList(MultiMapS m){
-  nodo *L =NULL;
-
-  for(MultiMapS::const_iterator it=m.begin();it!=m.end();++it){
-    appendToList(&L,it->second,abs(it->first));
-  }
-  //printList(L);
-  return L;
-}
-
-
 
 int main(int argc, char **argv){
 	/*
@@ -141,7 +139,7 @@ int main(int argc, char **argv){
 	string x= argv[1];
   cout<< x <<"/n";
   */
-  string nombreArchivo = "dna.100MB";
+  string nombreArchivo = "prueba.txt";
   ifstream archivo(nombreArchivo.c_str());
 
   string linea;
@@ -154,7 +152,7 @@ int main(int argc, char **argv){
   MultiMapS simbolos=Mapeo(frasexd);
   nodo *L = MapToList(simbolos);
   shannonFanon(0, simbolos.size() -1, L);
-  //int p = partition(L, simbolos.size()/2, 0, 0, simbolos.size());
   printList(L);
+  cout<<L->sim<<'\n';
   return 0;
 }
